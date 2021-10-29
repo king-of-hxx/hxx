@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: sueRimn
+ * @Date: 2021-10-11 09:34:15
+ * @LastEditors: sueRimn
+ * @LastEditTime: 2021-10-22 11:03:41
+-->
 <template>
   <div id="app">
     <router-view />

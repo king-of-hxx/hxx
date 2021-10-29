@@ -11,11 +11,49 @@ const routes = [{
   },
   {
     path: '/music',
+    redirect: '/music/findmusic',
     name: 'Music',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import( /* webpackChunkName: "about" */ '../views/Music.vue')
+    component: () => import('../views/Music.vue'),
+    children: [{
+        path: 'findmusic',
+        name: 'FindMusic',
+        redirect: '/music/findmusic/personalrecommend',
+        component: () => import('@/views/musicMenu/findMusic/findMusic.vue'),
+        children: [{
+            path: 'personalrecommend',
+            name: 'PersonalRecommend',
+            component: () => import('@/views/musicMenu/findMusic/PersonalRecommendation.vue'),
+          },
+          {
+            path: 'songlist',
+            name: 'SongList',
+            component: () => import('@/views/musicMenu/findMusic/SongList.vue')
+          },
+          {
+            path: 'leaderboard',
+            name: 'Leaderboard',
+            component: () => import('@/views/musicMenu/findMusic/Leaderboard.vue')
+          }
+        ]
+      },
+      {
+        path: 'video',
+        name: 'Video',
+        component: () => import('@/views/musicMenu/Video.vue')
+      },
+      {
+        path: 'friend',
+        name: 'Friend'
+      },
+      {
+        path: 'livestreaming',
+        name: 'Livestreaming'
+      },
+      {
+        path: 'myselfFM',
+        name: 'MyselfFM'
+      },
+    ]
   }
 ]
 

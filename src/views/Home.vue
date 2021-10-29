@@ -1,12 +1,13 @@
 <template>
   <div id="app">
     <div class="background">
-      <Model />
+      <we-chat-model />
+      <card-model />
       <header>
         <h5>郝祥兴大大的Blog!</h5>
-        <Collapse />
+        <collapse />
         <div class="img">
-          <img src="../assets/boy.jpg" alt="">
+          <img src="../assets/images/boy.jpg" alt="">
         </div>
         <span id="move_text"></span>
       </header>
@@ -15,7 +16,7 @@
         <i class="el-icon-arrow-down"></i>
       </article>
       <footer>
-        <FindMe />
+        <find-me />
       </footer>
     </div>
   </div>
@@ -23,17 +24,19 @@
 <script>
 import Collapse from "@/components/Collapse.vue"
 import FindMe from "@/components/FindMe.vue"
-import Model from "@/components/Model.vue"
+import WeChatModel from "@/components/WeChatModel.vue"
+import CardModel from "@/components/CardModel.vue"
 export default {
   components: {
     Collapse,
     FindMe,
-    Model
+    WeChatModel,
+    CardModel
   },
   mounted() {
     let str = " 记少年、骏马走韩卢，掀东郭。"
     let i = 0;
-    var move_text = document.getElementById('move_text')
+    let move_text = document.getElementById('move_text')
     if (i <= str.length) {
       setInterval(() => {
         move_text.innerHTML = str.slice(0, i++);
@@ -41,7 +44,16 @@ export default {
     } else {
       move_text.innerHTML = str;
     }
-  }
+  },
+  // created() {
+  //   this.$axios.get('https://autumnfish.cn//captcha/sent', {
+  //     params: {
+  //       phone: 15555643262
+  //     }
+  //   }).then(res => {
+  //     console.log(res);
+  //   })
+  // }
 }
 </script>
 <style lang="scss" scoped>
@@ -51,7 +63,7 @@ export default {
 .background {
   width: 100vw;
   height: 100vh;
-  background: url("../assets/bgc.png") center no-repeat;
+  background: url("../assets/images/bgc.png") center no-repeat;
   background-size: 100% 100%;
   header {
     margin: 0 auto;
@@ -148,25 +160,30 @@ export default {
       font-size: 50px;
       color: white;
       cursor: pointer;
+      animation: iconMove 2s infinite;
+    }
+    @keyframes iconMove {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(20px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
     }
     //设置按钮发光渐变效果
     button {
-      /* 设置字体大小 */
       font-size: 24px;
       /* 实现渐变色，90deg表示一个角度开始 */
       background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
-      /* 背景色放大 */
       background-size: 400%;
-      /* 图形大小 */
       width: 300px;
       height: 40px;
-      /* 行高 */
       line-height: 40px;
-      /* 文本居中 */
       text-align: center;
-      /* 字体颜色 */
       color: #fff;
-      /* 设置成胶囊状 */
       border-radius: 50px;
     }
     /* 设置发光 */
@@ -201,6 +218,11 @@ export default {
         background-position: -400% 0;
       }
     }
+  }
+}
+@media screen and (max-width: 576px) {
+  #move_text {
+    font-size: 25px;
   }
 }
 </style>

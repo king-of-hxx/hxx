@@ -1,30 +1,30 @@
 <template>
-  <div v-if="!isClose" class="model_box">
+  <div v-if="!isWechatClose" class="model_box">
     <div class="bg">
       <div class="content">
-        <el-button @click="closeModel" icon="el-icon-close" circle></el-button>
-        <img src="../assets/wechat.png" alt="">
+        <el-button @click="closeWechatModel" icon="el-icon-close" circle></el-button>
+        <img src="../assets/images/wechat.png" alt="">
         <p>微信扫一扫，添加我~</p>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { EventBus } from "@/components/event-bus.js";
+import { EventBus } from "@/common/event-bus.js";
 export default {
   data() {
     return {
-      isClose: true
+      isWechatClose: true
     }
   },
   methods: {
-    closeModel() {
-      this.isClose = !this.isClose
+    closeWechatModel() {
+      this.isWechatClose = !this.isWechatClose
     }
   },
   mounted() {
-    EventBus.$on("iscloseModel", (iscloseModel) => {
-      this.isClose = iscloseModel
+    EventBus.$on("iscloseWechatModel", (iscloseWechatModel) => {
+      this.isWechatClose = iscloseWechatModel
     })
   }
 }
@@ -77,15 +77,11 @@ img:hover {
 .bg::before {
   content: "";
   position: absolute;
-
-  /* 固定模糊层位置 */
   width: 200%;
   height: 200%;
   left: -80%;
-  /* 回调模糊层位置 */
   top: -20%;
-  /* 回调模糊层位置 */
-  background: url("../assets/girl.png") center no-repeat;
+  background: url("../assets/images/girl.png") center no-repeat;
   background-size: contain;
 
   filter: blur(5px);
@@ -118,6 +114,9 @@ img:hover {
   .bg::before {
     height: 180%;
     top: -40%;
+  }
+  .content {
+    width: 353px !important;
   }
 }
 </style>

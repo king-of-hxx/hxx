@@ -1,46 +1,50 @@
-
 <template>
-  <div class="findme">
+  <div class="find_me">
     <div class="group_list">
       <a href="javascript:void(0)" @click="openWechatModel">
-        <i class="fa fa-weixin fa-3x" aria-hidden="true"></i>
+        <i class="fa fa-weixin fa-3x"></i>
       </a>
       <a href="https://github.com/king-of-hxx">
-        <i class="fa fa-github fa-3x" aria-hidden="true"></i>
+        <i class="fa fa-github fa-3x"></i>
       </a>
-      <a href="javascript:void(0)">
-        <i class="fa fa-qq fa-3x" aria-hidden="true"></i>
+      <a href="https://space.bilibili.com/482180888">
+        <i class="fa fa-qq fa-3x"></i>
       </a>
-      <a href="javascript:void(0)">
-        <i class="fa fa-id-card-o fa-3x" aria-hidden="true"></i>
+      <a href="javascript:void(0)" @click="openCardModel">
+        <i class="fa fa-id-card-o fa-3x"></i>
       </a>
     </div>
   </div>
 </template>
 <script>
-import { EventBus } from "@/components/event-bus.js";
+import { EventBus } from "@/common/event-bus.js";
 export default {
   components: {
   },
   data() {
     return {
-      iscloseModel: false
+      iscloseWechatModel: false,
+      isclosCardModel: false,
     }
   },
   methods: {
     openWechatModel() {
-      EventBus.$emit("iscloseModel", this.iscloseModel)
+      EventBus.$emit("iscloseWechatModel", this.iscloseWechatModel)
+    },
+    openCardModel() {
+      EventBus.$emit("iscloseCardModel", this.iscloseCardModel)
     }
   }
 }
 </script>
-<style scoped lang="scss">
-.findme {
+<style lang="scss" scoped>
+.find_me {
   width: 100%;
   height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
+  // border: 1px solid red;
   animation: leftAnimate 2s ease 1;
   @keyframes leftAnimate {
     0% {
@@ -60,17 +64,29 @@ export default {
     // border: 1px solid red;
     a {
       width: 8%;
+      text-decoration: none;
       // border: 1px solid red;
       display: flex;
       justify-content: center;
       align-items: center;
     }
-    i {
+    .fa {
       color: white;
     }
     a:hover {
       font-size: 25px;
     }
+  }
+}
+@media screen and (max-width: 576px) {
+  .find_me {
+    height: 110px;
+  }
+  .group_list {
+    width: 100% !important;
+  }
+  a:hover {
+    font-size: none;
   }
 }
 </style>
