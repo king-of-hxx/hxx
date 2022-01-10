@@ -21,7 +21,6 @@ export default {
   created() {
     getFindMusicBanner().then(res => {
       this.bannerList = res.data.banners
-      console.log(res.data.banners.titleColor);
     })
   }
 }

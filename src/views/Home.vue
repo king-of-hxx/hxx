@@ -11,10 +11,10 @@
         </div>
         <span id="move_text"></span>
       </header>
-      <article>
+      <section>
         <button>进入博客</button>
         <i class="el-icon-arrow-down"></i>
-      </article>
+      </section>
       <footer>
         <find-me />
       </footer>
@@ -79,7 +79,7 @@ export default {
     font-size: 30px;
     font-weight: bold;
     h5 {
-      animation: leftAnimate 2s ease 1; /*调用已定义好的动画lefteaseinAnimate，全程运行时间1S，进入的速度曲线为ease，只播放一次*/
+      animation: leftAnimate 3s ease 1; /*调用已定义好的动画lefteaseinAnimate，全程运行时间3S，进入的速度曲线为ease，只播放一次*/
     }
     .el-button-group {
       position: fixed;
@@ -130,6 +130,18 @@ export default {
         transform: translateX(-2000px);
         opacity: 0;
       } /*在0%时设置文字在想X轴-2000px位移处（左边），透明度为0，也就是看不见文字*/
+      25% {
+        transform: rotateX(180deg);
+        opacity: 0.25;
+      }
+      50% {
+        transform: scale(1.8);
+        opacity: 0.5;
+      }
+      75% {
+        transform: scale(180deg);
+        opacity: 0.75;
+      }
       100% {
         transform: translateX(0px);
         opacity: 1;
@@ -146,7 +158,7 @@ export default {
       }
     }
   }
-  article {
+  section {
     width: 100%;
     height: 150px;
     margin: 0 auto;
@@ -185,6 +197,7 @@ export default {
       text-align: center;
       color: #fff;
       border-radius: 50px;
+      cursor: pointer;
     }
     /* 设置发光 */
 

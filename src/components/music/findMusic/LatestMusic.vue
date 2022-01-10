@@ -5,7 +5,7 @@
       <i class="el-icon-arrow-right"></i>
     </div>
     <div style="display:flex;flex-wrap:wrap;justify-content:space-between">
-      <div class="music_item" v-for="(item,index) in latestMusicList" :key="index">
+      <div class="music_item" v-for="(item,index) in latestMusicList" :key="index" @dblclick="playLatestMusic(item.id)">
         <div class="item_left">
           <img :src="item.picUrl" alt="">
           <i class="fa fa-play-circle-o fa-2x"></i>
@@ -27,17 +27,23 @@
 </template>
 <script>
 import { getLatestMusic } from "@/apis/findMusic"
+// import { getMusicUrl } from "@/apis/getMusicUrl"
 export default {
   data() {
     return {
-      latestMusicList: []
+      latestMusicList: [],
     }
   },
   created() {
     getLatestMusic().then(res => {
       this.latestMusicList = res.data.result
-      console.log(res.data.result);
     })
+  },
+  methods: {
+    playLatestMusic(id) {
+      this.$store.dispatch('latestMusic/getLatestMusicUrl', id);
+      this.$store.dispatch('latestMusic/getLatestMusicInfo', id)
+    }
   }
 }
 </script>
@@ -52,6 +58,7 @@ export default {
   .music_item {
     width: 32%;
     height: 60px;
+    cursor: pointer;
     border-radius: 10px;
     margin-bottom: 20px;
     display: flex;

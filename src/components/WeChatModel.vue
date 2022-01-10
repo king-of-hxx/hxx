@@ -26,6 +26,9 @@ export default {
     EventBus.$on("iscloseWechatModel", (iscloseWechatModel) => {
       this.isWechatClose = iscloseWechatModel
     })
+  },
+  beforeDestroy() {
+    EventBus.$off("iscloseWechatModel")
   }
 }
 </script>

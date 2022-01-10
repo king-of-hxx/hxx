@@ -5,12 +5,12 @@
       <i class="el-icon-arrow-right"></i>
     </div>
     <div class="playlist">
-      <el-col :span="4" v-for="(item, index) in recommendPlaylist" :key="index">
+      <el-col :span="4" v-for="(item, index) in recommendPlaylist" :key="index" @click.native="toRecommendPlaylistInfo(item.id)">
         <el-card :body-style="{ padding: '0px'}">
           <img :src="item.picUrl" class="image">
           <div class="play_volume">
             <i class="el-icon-headset" style="paddingTop: 4px;paddingLeft:15px"></i>
-            <span>{{item.playCount>10000 ? (item.playCount/10000).toFixed(0) +'万' : item.playCount}}</span>
+            <span>{{item.playCount>10000 ? (item.playCount/10000).toFixed() +'万' : item.playCount}}</span>
           </div>
           <div class="icon">
             <i class="fa fa-play-circle-o fa-3x"></i>
@@ -38,6 +38,12 @@ export default {
     })
   },
   methods: {
+    toRecommendPlaylistInfo(id) {
+      this.$router.push({
+        name: 'PlayListInfo'
+      })
+      console.log(id);
+    }
   },
 };
 </script>

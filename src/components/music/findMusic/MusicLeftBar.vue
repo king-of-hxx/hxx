@@ -1,8 +1,7 @@
-
 <template>
   <div class="left_bar">
     <el-menu :default-active="this.$route.path" class="el-menu-vertical-demo" active-text-color="#121212" :router="true" @select="handleSelect">
-      <el-menu-item index="/music/findmusic/personalrecommend">
+      <el-menu-item index="/music/findMusic/personalRecommend">
         <span>发现音乐</span>
       </el-menu-item>
       <el-menu-item index="/music/video">
@@ -38,16 +37,10 @@
         <i class="el-icon-setting"></i>
         <span>我的收藏</span>
       </el-menu-item>
-      <el-submenu index="11">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>创建的歌单</span>
-        </template>
-        <el-menu-item index="12">
-          <i class="el-icon-setting"></i>
-          <span>我喜欢的音乐</span>
-        </el-menu-item>
-      </el-submenu>
+      <el-menu-item index="12">
+        <i class="el-icon-setting"></i>
+        <span>我喜欢的音乐</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -67,7 +60,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .left_bar {
-  width: 240px;
+  width: 250px;
+  // border: 1px solid red;
   border-right: 1px solid rgb(192, 191, 191);
   z-index: 0;
   .el-menu-item.is-active {

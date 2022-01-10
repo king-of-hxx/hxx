@@ -20,11 +20,11 @@ export default {
   data() {
     return {
       titleList: [
-        { path: '/music/findmusic/personalrecommend', title: '个性推荐' },
-        { path: '/music/findmusic/songlist', title: '歌单' },
-        { path: '/music/findmusic/leaderboard', title: '排行榜' },
-        { path: '/music/findmusic/singer', title: '歌手' },
-        { path: '/music/findmusic/latestmusic', title: '最新音乐' }
+        { path: '/music/findMusic/personalRecommend', title: '个性推荐' },
+        { path: '/music/findMusic/songList', title: '歌单' },
+        { path: '/music/findMusic/leaderboard', title: '排行榜' },
+        { path: '/music/findMusic/singer', title: '歌手' },
+        { path: '/music/findMusic/latestMusic', title: '最新音乐' }
       ]
     };
   },

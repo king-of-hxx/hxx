@@ -12,15 +12,12 @@
             <i class="el-icon-headset"></i>
             <span>{{item.playCount}}</span>
           </div>
-          <div class="icon">
-            <i class="fa fa-play-circle-o fa-2x"></i>
-          </div>
           <div class="footer">
             <span>{{item.name}}</span>
             <span>{{item.artists[0].name}}</span>
           </div>
           <div class="playlist_mask">
-            <span>最新热门MV推荐</span>
+            <span style="opacity: 1">最新热门MV推荐</span>
           </div>
         </el-card>
       </el-col>
@@ -61,6 +58,7 @@ export default {
         cursor: pointer;
         .image {
           width: 100%;
+          height: 93px;
           display: block;
         }
         .play_volume {
@@ -76,13 +74,6 @@ export default {
           justify-content: center;
           align-items: center;
           justify-content: space-evenly;
-        }
-        .icon {
-          position: absolute;
-          top: 5%;
-          left: 6px;
-          color: white;
-          cursor: pointer;
         }
         .footer {
           display: flex;
@@ -104,19 +95,18 @@ export default {
         .playlist_mask {
           width: 100%;
           height: 25%;
-          color: white;
           position: absolute;
           left: 0;
           top: 0;
+          display: flex;
+          align-items: center;
           background: black;
           opacity: 0.5;
-          opacity: 0.4;
           transform: translateY(-100%);
           transition: transform 0.5s;
           span {
-            display: block;
-            margin-top: 20px;
-            margin-left: 10px;
+            color: white;
+            opacity: 1;
           }
         }
       }

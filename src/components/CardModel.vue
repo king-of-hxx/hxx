@@ -37,7 +37,11 @@ export default {
     EventBus.$on("iscloseCardModel", (isCloseCardModel) => {
       this.isCloseCardModel = isCloseCardModel
     })
+  },
+  beforeDestroy() {
+    EventBus.$off("iscloseCardModel")
   }
+
 }
 </script>
 <style lang="scss" scoped>

@@ -11,44 +11,54 @@ const routes = [{
   },
   {
     path: '/music',
-    redirect: '/music/findmusic',
+    redirect: '/music/findMusic',
     name: 'Music',
     component: () => import('../views/Music.vue'),
     children: [{
-        path: 'findmusic',
+        //发现音乐
+        path: 'findMusic',
         name: 'FindMusic',
-        redirect: '/music/findmusic/personalrecommend',
+        redirect: '/music/findMusic/personalRecommend',
         component: () => import('@/views/musicMenu/findMusic/findMusic.vue'),
         children: [{
-            path: 'personalrecommend',
+            path: 'personalRecommend',
             name: 'PersonalRecommend',
             component: () => import('@/views/musicMenu/findMusic/PersonalRecommendation.vue'),
           },
           {
-            path: 'songlist',
+            path: 'songList',
             name: 'SongList',
             component: () => import('@/views/musicMenu/findMusic/SongList.vue')
           },
           {
-            path: 'leaderboard',
+            path: 'leaderBoard',
             name: 'Leaderboard',
             component: () => import('@/views/musicMenu/findMusic/Leaderboard.vue')
           }
         ]
       },
       {
+        path: 'playListInfo',
+        name: 'PlayListInfo',
+        component: () => import('@/views/musicMenu/PlayListInfo.vue')
+      },
+      //视频
+      {
         path: 'video',
         name: 'Video',
         component: () => import('@/views/musicMenu/Video.vue')
       },
+      //朋友
       {
         path: 'friend',
         name: 'Friend'
       },
+      //直播
       {
-        path: 'livestreaming',
+        path: 'liveStreaming',
         name: 'Livestreaming'
       },
+      //私人FM
       {
         path: 'myselfFM',
         name: 'MyselfFM'

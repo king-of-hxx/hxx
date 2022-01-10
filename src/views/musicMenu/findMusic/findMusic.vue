@@ -4,7 +4,9 @@
       <find-music-header></find-music-header>
     </div>
     <div class="content">
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
       <footer>
         <i class="el-icon-arrow-up"></i>
         <el-button type="text" @click="backTop">回到顶部</el-button>
@@ -45,7 +47,6 @@ export default {
   // border: 1px solid red;
   .content {
     height: 600px;
-    overflow: auto;
     // border: 1px solid red;
     footer {
       width: 30%;
