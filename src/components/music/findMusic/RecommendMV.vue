@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import { getRecommendMV } from "@/apis/findMusic"
+import { getRecommendMV } from "@/apis/findMusic/findMusic"
 export default {
   data() {
     return {

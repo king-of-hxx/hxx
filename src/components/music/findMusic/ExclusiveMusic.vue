@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { getExclusiveMusic } from "@/apis/findMusic"
+import { getExclusiveMusic } from "@/apis/findMusic/findMusic"
 export default {
   name: 'ExclusiveMusic',
   data() {

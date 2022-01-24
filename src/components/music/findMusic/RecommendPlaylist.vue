@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { getFindMusicRecommend } from "@/apis/findMusic"
+import { getFindMusicRecommend } from "@/apis/findMusic/findMusic"
 export default {
   name: 'RecommendPlaylist',
   data() {
@@ -40,9 +40,12 @@ export default {
   methods: {
     toRecommendPlaylistInfo(id) {
       this.$router.push({
-        name: 'PlayListInfo'
+        name: 'PlayListInfo',
+        query: {
+          id,
+        },
       })
-      console.log(id);
+      // console.log(id);
     }
   },
 };

@@ -40,7 +40,7 @@ export default {
 <style lang="scss" scoped>
 .find_me {
   width: 100%;
-  height: 200px;
+  height: 180px;
   display: flex;
   justify-content: center;
   align-items: center;

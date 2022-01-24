@@ -7,9 +7,22 @@
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
+      <el-backtop target=".content" :bottom="90">
+        <div style="{
+        height: 100%;
+        width: 100%;
+        background-color: #f2f5f6;
+        box-shadow: 0 0 6px rgba(0,0,0, .12);
+        text-align: center;
+        line-height: 40px;
+        color: #1989fa;
+      }">
+          UP
+        </div>
+      </el-backtop>
       <footer>
         <i class="el-icon-arrow-up"></i>
-        <el-button type="text" @click="backTop">回到顶部</el-button>
+        <!-- <el-button type="text" @click="backTop">回到顶部</el-button> -->
       </footer>
     </div>
   </div>
@@ -27,26 +40,16 @@ export default {
     };
   },
   methods: {
-    backTop() {
-      let content = document.querySelector('.content')
-      //用定时器设置返回顶部的动画
-      const timeTop = setInterval(() => {
-        content.scrollTop -= 5;   //content.scrollTop是元素距离顶部的距离
-        if (content.scrollTop <= 0) {
-          clearInterval(timeTop);
-        }
-      }, 5);
-    }
   }
 }
 </script>
 <style lang="scss" scoped>
 .music_content {
   width: 100%;
-  padding: 0px 30px;
-  // border: 1px solid red;
+  padding-left: 30px;
   .content {
-    height: 600px;
+    height: 495px;
+    overflow-x: auto;
     // border: 1px solid red;
     footer {
       width: 30%;

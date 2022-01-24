@@ -1,6 +1,6 @@
 <template>
   <div class="left_bar">
-    <el-menu :default-active="this.$route.path" class="el-menu-vertical-demo" active-text-color="#121212" :router="true" @select="handleSelect">
+    <el-menu :default-active="this.$route.path" class="el-menu-vertical-demo" active-text-color="#121212" :router="true">
       <el-menu-item index="/music/findMusic/personalRecommend">
         <span>发现音乐</span>
       </el-menu-item>
@@ -37,7 +37,7 @@
         <i class="el-icon-setting"></i>
         <span>我的收藏</span>
       </el-menu-item>
-      <el-menu-item index="12">
+      <el-menu-item index="/music/myLove">
         <i class="el-icon-setting"></i>
         <span>我喜欢的音乐</span>
       </el-menu-item>
@@ -52,9 +52,14 @@ export default {
     }
   },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    }
+    // toMyLovePage() {
+    //   this.$router.push({
+    //     name: 'MyLoveMusic'
+    //   })
+    // },
+    // handleSelect(key, keyPath) {
+    //   console.log(key, keyPath);
+    // }
   }
 }
 </script>
@@ -65,12 +70,17 @@ export default {
   border-right: 1px solid rgb(192, 191, 191);
   z-index: 0;
   .el-menu-item.is-active {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: bold;
   }
   .el-menu-vertical-demo {
     display: flex;
     flex-direction: column;
+  }
+  /deep/ .el-menu-item,
+  .el-submenu__title {
+    height: 49px;
+    line-height: 49px;
   }
 }
 </style>

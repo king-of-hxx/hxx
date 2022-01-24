@@ -8,8 +8,8 @@
             <el-button style="float: right;" @click="closeCardModel" icon="el-icon-close" circle></el-button>
           </div>
           <div class="text">
-            <li v-for="o in 4" :key="o">
-              <span>个人标签：</span><span>html、css、js(含ES6)等前端基础扎实，熟练flex div+css布局、熟练使用Vue全家桶，理解Vue底层实现原理，熟悉linux基本命令，会使用git以及svn代码管理工具。</span>
+            <li v-for="item in skill" :key="item.id">
+              <span style="width:120px">{{item.title}}</span><span style="width:310px">{{item.content}}</span>
             </li>
             <!-- <li>
           <span>搜索标签：</span><span>前端、Vue、React、Node、Git</span>
@@ -26,6 +26,12 @@ export default {
   data() {
     return {
       isCloseCardModel: true,
+      skill: [
+        { id: '1', title: '个人喜欢名言1：', content: '无论多么牛逼的梦想,都挡不住你傻逼似的坚持!' },
+        { id: '2', title: '个人喜欢名言2：', content: '别把生活想得太好，你会跌得很重，也别把生活想得太糟，你会失去活的勇气，生活中真正的英雄含义，就是认清生活真相后依然热爱生活。' },
+        { id: '3', title: '个人特点：', content: '平时比较腼腆,但是我这个人还是很好打交道的,平时喜欢打打篮球,追追剧什么的。' },
+        { id: '4', title: '个人技能：', content: '熟练使用Vue全家桶和react前端技术以及一点java后端基础,理解Vue底层实现原理,熟悉linux基本命令,会使用git以及svn代码管理工具。' }
+      ]
     }
   },
   methods: {
@@ -59,6 +65,14 @@ export default {
 }
 .text {
   font-size: 14px;
+  li {
+    display: flex;
+    height: 75px;
+    span:first-child {
+      color: red;
+      text-shadow: 5px 5px 5px #8c8f8c;
+    }
+  }
 }
 
 .item {
@@ -87,7 +101,7 @@ export default {
   transform: translate(-50%, -50%);
   .clearfix {
     span {
-      font-size: 30px;
+      font-size: 20px;
       color: black;
       font-family: "微软雅黑";
       font-weight: bold;

@@ -18,10 +18,10 @@
     </div>
     <div class="play_control">
       <div class="icon_group">
-        <img class="pre" src="../../../assets/images/music_pre.png">
+        <img class="pre" @click="playPreMusic" src="../../../assets/images/music_pre.png">
         <img class="play" v-show="!isplay" @click="playMusic" src="../../../assets/images/music_play.png">
         <img class="play" v-show="isplay" @click="pauseMusic" src="../../../assets/images/music_stop.png">
-        <img class="next" src="../../../assets/images/music_next.png">
+        <img class="next" @click="playNextMusic" src="../../../assets/images/music_next.png">
       </div>
       <div class="play_progress">
         <span>{{musicDuration | currentTime}}</span>
@@ -46,12 +46,13 @@
       <i class="el-icon-close-notification"></i>
       <i class="el-icon-s-unfold"></i>
     </div>
-    <audio :src="latestMusicUrl" autoplay class="play_music_audio" @canplay="getTotalDuration" @timeupdate="timeUpdate" ref="audio"></audio>
+    <audio :src="musicUrl" autoplay class="play_music_audio" @canplay="getTotalDuration" @timeupdate="timeUpdate" ref="audio"></audio>
   </div>
 </template>
 <script>
 import { mapState } from 'vuex'
 import { timeFormat } from "@/common/uctil"
+import { getCurrentMusicUrl } from "@/utils/localStrorage";
 export default {
   components: {
   },
@@ -59,18 +60,18 @@ export default {
     return {
       musicPic: require('@/assets/images/error_img.jpg'),
       isLove: true,
-      isplay: false, //播放状态
+      isplay: getCurrentMusicUrl() === null ? false : true, //播放状态
       musicDuration: 0, //音乐当前播放时间
       totalDuration: 0, //总时长 默认先给个100
       isUrl: false, //设置无歌曲时进度条不可拖动
-      voice: 50, //音量
+      voice: 100, //音量
       isMute: false,//是否静音
       debace: true, //简单防抖
       isChange: false //是否被拖动
     }
   },
   computed: {
-    ...mapState('latestMusic', ['latestMusicUrl', 'picUrl', 'songName', 'artistsName']),
+    ...mapState('playListDetail', ['musicUrl', 'picUrl', 'songName', 'artistsName', 'num', 'musicIds']),
   },
   //利用过滤器将正在播放的当前时间的int型的秒数转化为时分秒格式
   filters: {
@@ -83,10 +84,10 @@ export default {
   },
 
   watch: {
-    //监听刚进来有没有歌曲url，有就显示播放
-    latestMusicUrl: {
-      handler(latestMusicUrl) {
-        if (latestMusicUrl == '') {
+    // 监听刚进来有没有歌曲url，有就显示播放
+    musicUrl: {
+      handler(musicUrl) {
+        if (musicUrl == null) {
           this.isplay = false
         } else {
           this.isplay = true
@@ -97,8 +98,31 @@ export default {
   },
   mounted() {
     this.changeMusicProgress()
+    console.log(this.$store.state);
   },
   methods: {
+    //切换上一首歌曲
+    playPreMusic() {
+      if (this.num > 0) {
+        this.$store.dispatch('playListDetail/getMusicIdNumDecrease', this.num)
+        this.$store.dispatch('playListDetail/getMusicUrl', this.musicIds[this.num]);
+        this.$store.dispatch('playListDetail/getMusicInfo', this.musicIds[this.num])
+        console.log(this.num);
+      } else {
+        this.$message.warning('亲，没有音乐可播放了哦~')
+      }
+    },
+    //切换下一首歌曲
+    playNextMusic() {
+      if (this.musicIds.length > this.num + 1) {
+        this.$store.dispatch('playListDetail/getMusicIdNumAdd', this.num)
+        this.$store.dispatch('playListDetail/getMusicUrl', this.musicIds[this.num]);
+        this.$store.dispatch('playListDetail/getMusicInfo', this.musicIds[this.num])
+        console.log(this.num);
+      } else {
+        this.$message.warning('亲，没有音乐可播放了哦~')
+      }
+    },
     playMusic() {
       this.isplay = !this.isplay
       this.$refs.audio.play()
@@ -121,7 +145,12 @@ export default {
       if (this.isChange == true) return
       //获取歌曲当前播放的时间
       this.musicDuration = this.$refs.audio.currentTime
+      //自动播放歌曲
+      if (this.musicDuration >= this.totalDuration) {
+        this.playNextMusic()
+      }
     },
+    //拖动进度条
     changeMusicProgress() {
       if (this.totalDuration == 0) return
       //将自行推拽的时间赋给当前播放的时间达到自行拖拽的效果
@@ -257,6 +286,9 @@ export default {
         //修改滑块上按钮的边框
         /deep/ .el-slider__button {
           border: 2px solid #fc0606;
+        }
+        /deep/ .el-slider__button-wrapper {
+          z-index: 10;
         }
       }
     }

@@ -45,15 +45,6 @@ export default {
       move_text.innerHTML = str;
     }
   },
-  // created() {
-  //   this.$axios.get('https://autumnfish.cn//captcha/sent', {
-  //     params: {
-  //       phone: 15555643262
-  //     }
-  //   }).then(res => {
-  //     console.log(res);
-  //   })
-  // }
 }
 </script>
 <style lang="scss" scoped>

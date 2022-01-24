@@ -5,7 +5,7 @@
       <i class="el-icon-arrow-right"></i>
     </div>
     <div style="display:flex;flex-wrap:wrap;justify-content:space-between">
-      <div class="music_item" v-for="(item,index) in latestMusicList" :key="index" @dblclick="playLatestMusic(item.id)">
+      <div class="music_item" v-for="(item,index) in latestMusicList" :key="index" @dblclick="playLatestMusic(item.id,item.num)">
         <div class="item_left">
           <img :src="item.picUrl" alt="">
           <i class="fa fa-play-circle-o fa-2x"></i>
@@ -26,23 +26,34 @@
   </div>
 </template>
 <script>
-import { getLatestMusic } from "@/apis/findMusic"
+import { getLatestMusic } from "@/apis/findMusic/findMusic"
 // import { getMusicUrl } from "@/apis/getMusicUrl"
 export default {
   data() {
     return {
       latestMusicList: [],
+      num: 0,
     }
   },
   created() {
     getLatestMusic().then(res => {
       this.latestMusicList = res.data.result
+      this.latestMusicList.map((item) => {
+        item.num = this.num++
+      })
+      // console.log(this.latestMusicList);
     })
   },
   methods: {
-    playLatestMusic(id) {
-      this.$store.dispatch('latestMusic/getLatestMusicUrl', id);
-      this.$store.dispatch('latestMusic/getLatestMusicInfo', id)
+    playLatestMusic(id, num) {
+      //播放调用dispatch
+      this.$store.dispatch('playListDetail/getMusicUrl', id);
+      this.$store.dispatch('playListDetail/getMusicInfo', id)
+      //获取最新音乐的歌曲id数组
+      this.$store.dispatch('playListDetail/getLatestMusicIds', this.latestMusicList)
+      //把num标识提交到vuex用来判断切换歌曲
+      this.$store.commit('playListDetail/getMusicIdNum', num)
+      // console.log(this.$store.state);
     }
   }
 }

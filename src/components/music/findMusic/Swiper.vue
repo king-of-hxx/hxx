@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import { getFindMusicBanner } from "@/apis/findMusic.js"
+import { getFindMusicBanner } from "@/apis/findMusic/findMusic.js"
 export default {
   data() {
     return {
