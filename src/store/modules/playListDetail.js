@@ -3,13 +3,14 @@ import { getMyLoveMusic } from "@/apis/myLoveMusic";
 import {
   setLocalStrorage,
   getLocalStrorage,
-  setCurrentMusicUrl,
-  getCurrentMusicUrl,
+  // setCurrentMusicUrl,
+  // getCurrentMusicUrl,
 } from "@/utils/localStrorage";
+import Vue from "vue";
 export default {
   namespaced: true,
   state: {
-    musicUrl: getCurrentMusicUrl(),
+    musicUrl: null,
     picUrl: "",
     songName: "",
     artistsName: "",
@@ -20,8 +21,13 @@ export default {
   getters: {},
   mutations: {
     GetMusicUrl(state, musicUrl) {
-      state.musicUrl = musicUrl;
-      setCurrentMusicUrl(musicUrl);
+      if (musicUrl === null) {
+        Vue.prototype.$message.warning("该歌曲需要会员用户才能播放!");
+        state.musicUrl = null;
+      } else {
+        state.musicUrl = musicUrl;
+        // setCurrentMusicUrl(musicUrl);
+      }
     },
     GetMusicInfo(state, object) {
       state.picUrl = object.al.picUrl;
@@ -42,6 +48,7 @@ export default {
     //获取歌曲url播放地址
     getMusicUrl(context, id) {
       getMusicUrl(id).then((res) => {
+        console.log("1111111", res);
         context.commit("GetMusicUrl", res.data.data[0].url);
       });
     },

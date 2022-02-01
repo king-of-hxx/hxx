@@ -17,28 +17,28 @@
         <span>私人FM</span>
       </el-menu-item>
       <h5 style="padding:10px 20px;opacity: 0.5;">我的音乐</h5>
-      <el-menu-item index="6">
-        <i class="el-icon-setting"></i>
+      <el-menu-item index="/music/download">
+        <i class="el-icon-download"></i>
         <span>本地与下载</span>
       </el-menu-item>
-      <el-menu-item index="7">
-        <i class="el-icon-setting"></i>
+      <el-menu-item index="/music/recentlyPlayed">
+        <i class="el-icon-pie-chart"></i>
         <span>最近播放</span>
       </el-menu-item>
-      <el-menu-item index="8">
-        <i class="el-icon-setting"></i>
+      <el-menu-item index="/music/myMusicCloud">
+        <i class="el-icon-cloudy"></i>
         <span>我的音乐云盘</span>
       </el-menu-item>
-      <el-menu-item index="9">
-        <i class="el-icon-setting"></i>
+      <el-menu-item index="/music/myPodcast">
+        <i class="el-icon-service"></i>
         <span>我的播客</span>
       </el-menu-item>
-      <el-menu-item index="10">
-        <i class="el-icon-setting"></i>
+      <el-menu-item index="/music/collect">
+        <i class="el-icon-folder"></i>
         <span>我的收藏</span>
       </el-menu-item>
       <el-menu-item index="/music/myLove">
-        <i class="el-icon-setting"></i>
+        <i class="fa fa-heart-o fa-lg"></i>
         <span>我喜欢的音乐</span>
       </el-menu-item>
     </el-menu>
@@ -69,6 +69,9 @@ export default {
   // border: 1px solid red;
   border-right: 1px solid rgb(192, 191, 191);
   z-index: 0;
+  .fa-heart-o {
+    margin-right: 10px;
+  }
   .el-menu-item.is-active {
     font-size: 1.1rem;
     font-weight: bold;

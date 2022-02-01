@@ -14,7 +14,7 @@ export default {
   },
   getters: {},
   mutations: {
-    GetCurrentUserInfo(state, [token, currentUserInfo]) {
+    GetCurrentUserInfo(state, [currentUserInfo, token]) {
       state.currentUserInfo = currentUserInfo;
       state.token = token;
     },
@@ -46,7 +46,7 @@ export default {
           setProfile(currentUserInfo);
           setToken(token);
           Message.success("登录成功!");
-          context.commit("GetCurrentUserInfo", [token, currentUserInfo]);
+          context.commit("GetCurrentUserInfo", [currentUserInfo, token]);
         } else {
           Message.error("登录失败,账号或密码不正确,请重试!");
         }
@@ -56,8 +56,9 @@ export default {
     async getQrcodeUserInfo(context) {
       const userInfo = await getAccountInfo();
       console.log(userInfo);
-      setProfile(userInfo.data.profile);
-      context.commit("GetCurrentUserInfo", userInfo.data.profile);
+      let currentUserInfo = userInfo.data.profile;
+      setProfile(currentUserInfo);
+      context.commit("GetCurrentUserInfo", currentUserInfo);
     },
   },
 };

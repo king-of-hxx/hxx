@@ -19,8 +19,8 @@
     <div class="play_control">
       <div class="icon_group">
         <img class="pre" @click="playPreMusic" src="../../../assets/images/music_pre.png">
-        <img class="play" v-show="!isplay" @click="playMusic" src="../../../assets/images/music_play.png">
-        <img class="play" v-show="isplay" @click="pauseMusic" src="../../../assets/images/music_stop.png">
+        <img class="play" v-show="!isplayStatus" @click="playMusic" src="../../../assets/images/music_play.png">
+        <img class="play" v-show="isplayStatus" @click="pauseMusic" src="../../../assets/images/music_stop.png">
         <img class="next" @click="playNextMusic" src="../../../assets/images/music_next.png">
       </div>
       <div class="play_progress">
@@ -52,7 +52,7 @@
 <script>
 import { mapState } from 'vuex'
 import { timeFormat } from "@/common/uctil"
-import { getCurrentMusicUrl } from "@/utils/localStrorage";
+// import { getCurrentMusicUrl } from "@/utils/localStrorage";
 export default {
   components: {
   },
@@ -60,7 +60,7 @@ export default {
     return {
       musicPic: require('@/assets/images/error_img.jpg'),
       isLove: true,
-      isplay: getCurrentMusicUrl() === null ? false : true, //播放状态
+      isplayStatus: false, //播放状态
       musicDuration: 0, //音乐当前播放时间
       totalDuration: 0, //总时长 默认先给个100
       isUrl: false, //设置无歌曲时进度条不可拖动
@@ -88,9 +88,9 @@ export default {
     musicUrl: {
       handler(musicUrl) {
         if (musicUrl == null) {
-          this.isplay = false
+          this.isplayStatus = false
         } else {
-          this.isplay = true
+          this.isplayStatus = true
         }
       },
       immediate: true
@@ -110,6 +110,7 @@ export default {
         console.log(this.num);
       } else {
         this.$message.warning('亲，没有音乐可播放了哦~')
+        this.isplayStatus = false
       }
     },
     //切换下一首歌曲
@@ -121,14 +122,15 @@ export default {
         console.log(this.num);
       } else {
         this.$message.warning('亲，没有音乐可播放了哦~')
+        this.isplayStatus = false
       }
     },
     playMusic() {
-      this.isplay = !this.isplay
+      this.isplayStatus = true
       this.$refs.audio.play()
     },
     pauseMusic() {
-      this.isplay = !this.isplay
+      this.isplayStatus = false
       this.$refs.audio.pause()
     },
     getLoveMusic() {

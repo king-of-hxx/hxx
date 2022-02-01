@@ -6,7 +6,7 @@
     </div>
     <div class="playlist">
       <el-col :span="4" v-for="(item, index) in recommendPlaylist" :key="index" @click.native="toRecommendPlaylistInfo(item.id)">
-        <el-card :body-style="{ padding: '0px'}">
+        <el-card :body-style="{ padding: '0px'}" shadow="always">
           <img :src="item.picUrl" class="image">
           <div class="play_volume">
             <i class="el-icon-headset" style="paddingTop: 4px;paddingLeft:15px"></i>

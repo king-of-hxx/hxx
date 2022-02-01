@@ -2,6 +2,7 @@ import axios from "axios";
 // import { Message } from "element-ui";
 import { openLoading, closeLoading } from "./loading";
 
+const whiteList = ["/login/qr/check"];
 const instance = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
   timeout: 20000,
@@ -10,10 +11,10 @@ const instance = axios.create({
 //http request拦截器
 instance.interceptors.request.use(
   (config) => {
-    openLoading();
-    // if (store.getters.token) {
-    //   config.headers["X-Token"] = getToken();
-    // }
+    if (whiteList.indexOf(config.url) === -1) {
+      openLoading();
+      // config.headers["X-Token"] = getToken();
+    }
     return config;
   },
   (err) => {

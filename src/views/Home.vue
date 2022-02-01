@@ -12,7 +12,7 @@
         <span id="move_text"></span>
       </header>
       <section>
-        <button>进入博客</button>
+        <button @click="toMyBlog">进入博客</button>
         <i class="el-icon-arrow-down"></i>
       </section>
       <footer>
@@ -34,7 +34,7 @@ export default {
     CardModel
   },
   mounted() {
-    let str = " 记少年、骏马走韩卢，掀东郭。"
+    let str = " 新鲜感总会过去，责任和教养不会。"
     let i = 0;
     let move_text = document.getElementById('move_text')
     if (i <= str.length) {
@@ -45,6 +45,13 @@ export default {
       move_text.innerHTML = str;
     }
   },
+  methods: {
+    toMyBlog() {
+      this.$router.push({
+        name: 'MyBlog'
+      })
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -56,6 +63,7 @@ export default {
   height: 100vh;
   background: url("../assets/images/bgc.png") center no-repeat;
   background-size: 100% 100%;
+  overflow: hidden;
   header {
     margin: 0 auto;
     padding: 25px 0;

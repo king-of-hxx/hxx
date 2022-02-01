@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: sueRimn
+ * @Date: 2021-12-23 17:05:03
+ * @LastEditors: sueRimn
+ * @LastEditTime: 2022-01-31 12:56:27
+-->
 <template>
   <div class="recommend_playlist">
     <div class="title">
@@ -5,8 +13,8 @@
       <i class="el-icon-arrow-right"></i>
     </div>
     <div class="playlist">
-      <el-col :span="7" v-for="(item, index) in exclusiveMusicList" :key="index">
-        <el-card :body-style="{ padding: '0px'}">
+      <el-col :span="7" v-for="(item, index) in exclusiveMusicList" :key="index" @click.native="toPlayMVPage(item.id)">
+        <el-card :body-style="{ padding: '0px'}" shadow="always">
           <img :src="item.picUrl" class="image">
           <div class="icon">
             <i class="fa fa-play-circle-o fa-2x" aria-hidden="true"></i>
@@ -30,11 +38,17 @@ export default {
   created() {
     getExclusiveMusic().then(res => {
       this.exclusiveMusicList = res.data.result
+      // console.log(this.exclusiveMusicList);
     })
   },
   methods: {
-    toListPage() {
-
+    toPlayMVPage(id) {
+      this.$store.dispatch('playMvDetail/getMvInfo', id)
+      this.$store.dispatch('playMvDetail/getMvUrl', id)
+      this.$store.dispatch('playMvDetail/getRelateMv', id)
+      this.$router.push({
+        name: "MVPlayPage"
+      })
     },
   },
 };

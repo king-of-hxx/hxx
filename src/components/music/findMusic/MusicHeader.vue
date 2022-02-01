@@ -9,7 +9,21 @@
         <el-button @click="()=>{this.$router.go(-1)}" class="pre_button" icon="el-icon-arrow-left" circle size="mini"></el-button>
         <el-button class="next_button" icon="el-icon-arrow-right" circle size="mini"></el-button>
       </div>
-      <el-input class="search_music" v-model="input" placeholder="搜索" prefix-icon="el-icon-search"></el-input>
+      <el-input ref="input" class="search_music" @focus="showHotSearch" @blur="closeHotSearch" @input="changeInput" @keyup.enter.native="searchMusic" v-model="input" placeholder="搜索" prefix-icon="el-icon-search"></el-input>
+      <ul v-show="isShowHotSearch" class="hot_search">
+        <h4 class="title">热搜榜</h4>
+        <li v-for="(item,index) in hotSearch" :key="index" @click="hotSearchValue(item.searchWord)">
+          <span class="number">{{index+1}}</span>
+          <div class="hot_music_info">
+            <span class="hotmusic_description">
+              <span style="color:black">{{item.searchWord}}</span>
+              <span class="play_count">{{item.score}}</span>
+              <img v-show="item.iconUrl!==null" class="icon" :src="item.iconUrl" alt="">
+            </span>
+            <span v-show="item.content!==''" class="signature">{{item.content}}</span>
+          </div>
+        </li>
+      </ul>
     </div>
     <div class="right">
       <el-dropdown trigger="click">
@@ -92,13 +106,17 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import { hotSearchMusic } from '@/apis/search'
 import { getPhoneLoginOut, qrcodeLogin, createQrcode, checkQrcodeStatus, getPhoneLoginRefresh, uploadAvatar } from "@/apis/login"
 // import { setProfile } from "@/utils/localStrorage";
 export default {
   data() {
     return {
-      input: '',
+      //搜索数据
+      input: 'wave',
+      hotSearch: [],
+      isShowHotSearch: false,
       userImg: require("@/assets/images/login_person.png"),
       isCloseCardModel: true, //显示登陆框
       loginInfoRules: {
@@ -130,14 +148,66 @@ export default {
     }
   },
   created() {
-    console.log(this.currentUserInfo);
+    hotSearchMusic().then(res => {
+      this.hotSearch = res.data.data
+    })
+    this.getSearchSongs(this.input)
+    this.getSearchSinger(this.input)
+    this.getSearchAlbum(this.input)
+    this.getSearchVideo(this.input)
+    this.getSearchSongList(this.input)
+    this.getSearchUser(this.input)
   },
   methods: {
+    ...mapActions('searchMusic', ['getSearchSongs', 'getSearchSinger', 'getSearchAlbum', 'getSearchVideo', 'getSearchSongList', 'getSearchUser']),
     openLogin() {
       this.isCloseCardModel = false;
     },
     cancelLogin() {
       this.isCloseCardModel = true;
+    },
+    //热搜框是否展示
+    showHotSearch() {
+      if (this.input.trim() === '') {
+        this.isShowHotSearch = true
+      } else {
+        this.isShowHotSearch = false
+      }
+    },
+    closeHotSearch() {
+      setTimeout(() => {
+        this.isShowHotSearch = false
+      }, 500)
+      console.log(this.input);
+    },
+    changeInput() {
+      console.log(11111);
+      if (this.input.trim() === '') {
+        this.isShowHotSearch = true
+      } else {
+        this.isShowHotSearch = false
+      }
+    },
+    //选择热搜的value
+    hotSearchValue(inputValue) {
+      this.isShowHotSearch = false
+      console.log(inputValue);
+      this.input = inputValue
+      this.$refs.input.focus()
+      // console.log(this.input);
+    },
+    //用户搜索后进入搜索结果的页面
+    searchMusic() {
+      this.$router.push({
+        name: "Search",
+      })
+      // this.$store.dispatch('searchMusic/getSearchSongs', this.input)
+      this.getSearchSongs(this.input)
+      this.getSearchSinger(this.input)
+      this.getSearchAlbum(this.input)
+      this.getSearchVideo(this.input)
+      this.getSearchSongList(this.input)
+      this.getSearchUser(this.input)
     },
     //手机号登录
     confirmLogin() {
@@ -187,6 +257,7 @@ export default {
       await getPhoneLoginRefresh();
     },
     loginOut() {
+      this.logoutDialogVisible = false
       getPhoneLoginOut().then(res => {
         if (res.data.code == 200) {
           //当前用户信息设置为null
@@ -245,7 +316,7 @@ export default {
     },
     back_index() {
       this.$router.push({
-        name: "Home"
+        name: "Home",
       })
     }
   }
@@ -256,6 +327,7 @@ export default {
   width: 100%;
   height: 60px;
   line-height: 60px;
+  position: relative;
   background-color: red;
   color: white;
   display: flex;
@@ -266,10 +338,12 @@ export default {
     padding-left: 20px;
     img {
       border-radius: 50%;
+      height: 26px;
+      width: 26px;
     }
     span {
       letter-spacing: 2px;
-      font-size: 20px;
+      font-size: 16px;
       margin-left: 10px;
     }
   }
@@ -295,6 +369,90 @@ export default {
       .el-button:nth-child(2) {
         margin-right: 20px;
       }
+    }
+    .hot_search {
+      position: absolute;
+      left: 225px;
+      top: 63px;
+      width: 40%;
+      height: 500px;
+      overflow: auto;
+      z-index: 10000;
+      background-color: white;
+      box-shadow: 0px 0px 5px rgb(214, 212, 212);
+      .title {
+        color: rgb(141, 140, 140);
+        font-weight: 300;
+        margin: 0px 20px;
+      }
+      & :nth-child(2),
+      :nth-child(3),
+      :nth-child(4) {
+        .number {
+          color: red;
+        }
+      }
+      li {
+        height: 45px;
+        font-size: 13px;
+        display: flex;
+        cursor: pointer;
+        // border: 1px solid red;
+        .number {
+          height: 45px;
+          line-height: 45px;
+          font-size: 15px;
+          margin: 0px 20px;
+          color: #d4d4d3;
+        }
+        .hot_music_info {
+          height: 45px;
+          // line-height: 45px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
+          // border: 1px solid rgb(0, 255, 55);
+          .hotmusic_description {
+            height: 20px;
+            line-height: 30px;
+            display: flex;
+            align-items: center;
+            // border: 1px solid red;
+            .play_count {
+              height: 30px;
+              margin: 0px 10px;
+              color: rgb(207, 207, 207);
+            }
+            .icon {
+              height: 20px;
+              width: 20px;
+            }
+          }
+          .signature {
+            height: 15px;
+            line-height: 15px;
+            color: #d4d4d3;
+          }
+        }
+      }
+      li:hover {
+        background-color: rgb(242, 242, 242);
+      }
+    }
+    ::-webkit-scrollbar {
+      //滚动条的宽度
+      width: 6px;
+      height: 9px;
+    }
+    ::-webkit-scrollbar-thumb {
+      //滚动条的设置
+      background-color: #dfe6ea;
+      background-clip: padding-box;
+      min-height: 28px;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #cebd24;
     }
     /deep/ .el-input__inner {
       border-radius: 25px !important;
@@ -410,6 +568,9 @@ export default {
 }
 .el-icon-arrow-down {
   font-size: 16px;
+}
+/deep/ .el-input__inner {
+  color: white;
 }
 /deep/ .el-dropdown {
   line-height: 55px;

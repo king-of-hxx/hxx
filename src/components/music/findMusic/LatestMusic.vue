@@ -72,6 +72,7 @@ export default {
     cursor: pointer;
     border-radius: 10px;
     margin-bottom: 20px;
+    box-shadow: 0px 0px 10px rgb(97, 96, 96);
     display: flex;
     &:hover {
       background-color: rgb(221, 219, 219);

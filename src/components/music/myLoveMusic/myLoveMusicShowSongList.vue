@@ -93,8 +93,11 @@ export default {
 }
 ul {
   li {
+    height: 40px;
     display: flex;
+    font-size: 14px;
     justify-content: space-between;
+    box-shadow: 0px 0px 5px rgb(201, 200, 200);
     margin-bottom: 10px;
     color: rgb(54, 54, 54);
     .operate {
@@ -120,12 +123,15 @@ ul {
       }
     }
     .songer {
+      line-height: 40px;
       width: 20%;
     }
     .album {
+      line-height: 40px;
       width: 25%;
     }
     .time {
+      line-height: 40px;
       width: 7%;
       text-align: center;
       margin-right: 10px;
@@ -133,6 +139,12 @@ ul {
   }
   li:hover {
     background-color: rgb(190, 187, 187);
+  }
+  li:nth-child(odd) {
+    background-color: rgb(240, 236, 236);
+  }
+  li:nth-child(even) {
+    background-color: rgb(211, 208, 208);
   }
 }
 </style>

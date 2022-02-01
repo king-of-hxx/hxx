@@ -5,8 +5,8 @@
       <i class="el-icon-arrow-right"></i>
     </div>
     <div class="playlist">
-      <el-col :span="5" v-for="(item, index) in recommendMvList" :key="index">
-        <el-card :body-style="{ padding: '0px'}">
+      <el-col :span="5" v-for="(item, index) in recommendMvList" :key="index" @click.native="playRecommendMv(item.id)">
+        <el-card :body-style="{ padding: '0px'}" shadow="always">
           <img :src="item.picUrl" class="image">
           <div class="play_volume">
             <i class="el-icon-headset"></i>
@@ -25,6 +25,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
 import { getRecommendMV } from "@/apis/findMusic/findMusic"
 export default {
   data() {
@@ -36,6 +37,17 @@ export default {
     getRecommendMV().then(res => {
       this.recommendMvList = res.data.result
     })
+  },
+  methods: {
+    ...mapActions('playMvDetail', ['getMvInfo', 'getMvUrl', 'getRelateMv']),
+    playRecommendMv(id) {
+      this.$router.push({
+        name: "MVPlayPage"
+      })
+      this.getMvInfo(id)
+      this.getMvUrl(id)
+      this.getRelateMv(id)
+    }
   }
 }
 </script>

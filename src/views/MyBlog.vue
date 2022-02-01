@@ -1,7 +1,7 @@
 <template>
   <div>
     <span>404 Not Found</span>
-    <span>该博主暂还没想好该页面排版和相关技术分享。。。</span>
+    <span>该博主暂还没想好博客的页面排版和相关技术分享。。。</span>
   </div>
 </template>
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="songs_box">
     <div class="header">
       <span>操作</span>
       <span>标题</span>
@@ -18,52 +18,38 @@
           <p>{{item.name}}</p>
           <span>SQ</span>
         </span>
-        <p class="songer">{{item.ar[0].name}}</p>
-        <p class="album">{{item.al.name}}</p>
-        <p class="time">{{item.dt | totaltime}}</p>
+        <p class="songer">{{item.artists[0].name}}</p>
+        <p class="album">{{item.album.name}}</p>
+        <p class="time">{{item.duration | totaltime}}</p>
       </li>
     </ul>
   </div>
 </template>
 <script>
 import { mapState } from 'vuex'
-// import { getMusicInfo } from "@/apis/getSongDetail";
 import { timeFormat } from '@/utils/util'
 export default {
   data() {
     return {
-      id: Number,
+      limit: 30,
+      type: 100,
       num: 0
     }
   },
   computed: {
-    ...mapState('playListDetail', ['musicIds', 'musicInfoArr'])
+    ...mapState('searchMusic', ['keywords', 'musicInfoArr']),
   },
   filters: {
     totaltime(time) {
       return timeFormat(time)
     }
   },
-  // watch: {
-  //   id() {
-  //     this.$forceUpdate()
-  //   }
-  // },
   activated() {
-    this.id = Number(this.$route.query.id)
+    // this.id = Number(this.$route.query.id)
   },
   created() {
   },
   mounted() {
-    this.id = Number(this.$route.query.id)
-    console.log(this.id);
-    this.$store.dispatch('recommendPlaylist/getRecommendPlaylistInfo', this.id)
-    this.$store.commit('recommendPlaylist/getSongId', this.id)
-    let id = this.id
-    let num = this.num
-    this.$store.dispatch('playListDetail/getPlaylistInfo', { id, num })
-    // console.log(11111111, this.musicIds);
-    // console.log(22222222, JSON.parse(localStorage.getItem('musicIds')));
   },
   methods: {
     playMusic(id, num) {
@@ -100,10 +86,12 @@ export default {
 ul {
   li {
     height: 40px;
+    padding-left: 20px;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgb(201, 200, 200);
     display: flex;
     font-size: 14px;
     justify-content: space-between;
-    box-shadow: 0px 0px 5px rgb(201, 200, 200);
     margin-bottom: 10px;
     color: rgb(54, 54, 54);
     .operate {
@@ -127,6 +115,11 @@ ul {
         border: 1px solid red;
         line-height: 18px;
       }
+    }
+    p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .songer {
       line-height: 40px;
