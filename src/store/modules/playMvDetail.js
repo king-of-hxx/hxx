@@ -23,7 +23,7 @@ export default {
     GetMvUrl(state, url) {
       state.mvUrl = url;
       setMvurl(url);
-      console.log(url);
+      // console.log("vuex", url);
     },
     GetRelateMv(state, mvs) {
       state.mvs = mvs;
@@ -36,11 +36,12 @@ export default {
       let mvInfo = res.data.data;
       context.commit("GetMvInfo", mvInfo);
     },
-    async getMvUrl(context, id) {
-      const res = await getMVUrl(id);
-      //   console.log(res);
-      const { url } = res.data.data;
-      context.commit("GetMvUrl", url);
+    getMvUrl(context, id) {
+      getMVUrl(id).then((res) => {
+        console.log("url", res);
+        const { url } = res.data.data;
+        context.commit("GetMvUrl", url);
+      });
     },
     async getRelateMv(context, id) {
       const res = await getRelateMV(id);

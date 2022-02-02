@@ -12,6 +12,7 @@
             <span>MV详情</span>
           </h5>
           <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions"></video-player>
+          <div>{{playerOptions['sources'][0]['src']}}</div>
           <div class="MV_info">
             <span class="info_first">
               <img :src="mvInfo.cover" alt="">
@@ -73,9 +74,9 @@ export default {
         fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
         sources: [{
           type: "video/mp4", // 类型
-          src: `${this.$store.state.playMvDetail.mvUrl}`// url地址
+          src: this.$store.state.playMvDetail.mvUrl// url地址
         }],
-        poster: `${this.$store.state.playMvDetail.mvInfo.cover}`, // 封面地址
+        poster: this.$store.state.playMvDetail.mvInfo.cover, // 封面地址
         notSupportedMessage: '此视频暂无法播放，请稍后再试', // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
         controlBar: {
           timeDivider: true, // 当前时间和持续时间的分隔符
@@ -101,6 +102,7 @@ export default {
     playerOptions: {
       handler(a, b) {
         console.log('1111111111', a, b);
+        this.$forceUpdate()
         // this.playerOptions['sources'][0]['src'] = this.mvUrl
       },
       deep: true,
@@ -112,6 +114,7 @@ export default {
     }
   },
   mounted() {
+    // console.log('mounted', this.mvUrl);
   },
   methods: {
     ...mapActions('playMvDetail', ['getMvInfo', 'getMvUrl', 'getRelateMv']),
@@ -119,10 +122,12 @@ export default {
       this.isShowDes = !this.isShowDes
     },
     //点击播放相关推荐mv
-    playRelateMv(id) {
-      this.getMvInfo(id)
-      this.getMvUrl(id)
-      this.getRelateMv(id)
+    async playRelateMv(id) {
+      await this.getMvInfo(id)
+      await this.getMvUrl(id)
+      await this.getRelateMv(id)
+      this.playerOptions['sources'][0]['src'] = this.$store.state.playMvDetail.mvUrl
+      this.playerOptions['poster'] = this.$store.state.playMvDetail.mvInfo.cover
     }
   },
 };

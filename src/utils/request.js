@@ -2,7 +2,7 @@ import axios from "axios";
 // import { Message } from "element-ui";
 import { openLoading, closeLoading } from "./loading";
 
-const whiteList = ["/login/qr/check"];
+const whiteList = ["/login/qr/check", "/mv/url", "/simi/mv"];
 const instance = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
   timeout: 20000,

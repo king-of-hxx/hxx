@@ -40,13 +40,13 @@ export default {
   },
   methods: {
     ...mapActions('playMvDetail', ['getMvInfo', 'getMvUrl', 'getRelateMv']),
-    playRecommendMv(id) {
-      this.$router.push({
+    async playRecommendMv(id) {
+      await this.getMvInfo(id)
+      await this.getMvUrl(id)
+      await this.getRelateMv(id)
+      await this.$router.push({
         name: "MVPlayPage"
       })
-      this.getMvInfo(id)
-      this.getMvUrl(id)
-      this.getRelateMv(id)
     }
   }
 }

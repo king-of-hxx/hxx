@@ -28,6 +28,7 @@
 
 <script>
 import { getExclusiveMusic } from "@/apis/findMusic/findMusic"
+import { mapActions } from 'vuex';
 export default {
   name: 'ExclusiveMusic',
   data() {
@@ -42,13 +43,14 @@ export default {
     })
   },
   methods: {
-    toPlayMVPage(id) {
-      this.$store.dispatch('playMvDetail/getMvInfo', id)
-      this.$store.dispatch('playMvDetail/getMvUrl', id)
-      this.$store.dispatch('playMvDetail/getRelateMv', id)
-      this.$router.push({
-        name: "MVPlayPage"
-      })
+    ...mapActions('playMvDetail', ['getMvInfo', 'getMvUrl', 'getRelateMv']),
+    async toPlayMVPage(id) {
+      await this.getMvInfo(id),
+        await this.getMvUrl(id),
+        await this.getRelateMv(id),
+        await this.$router.push({
+          name: "MVPlayPage"
+        })
     },
   },
 };
