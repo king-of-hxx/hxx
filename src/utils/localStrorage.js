@@ -1,5 +1,5 @@
 //歌曲id数组的数据持久化
-const token = "token";
+const cookie = "cookie";
 const profile = "currentUserInfo";
 const musicIds = "musicIds";
 const songId = "songId";
@@ -9,20 +9,29 @@ const mvInfo = "mvInfo";
 const mvurl = "mvurl";
 const mvs = "mvs";
 //存token
-export function setToken(Token) {
-  return localStorage.setItem(token, Token);
+export function setCookie(Cookie) {
+  return localStorage.setItem(cookie, Cookie);
 }
 
-export function getToken() {
-  return localStorage.getItem(token);
+export function getCookie() {
+  return localStorage.getItem(cookie);
 }
 //存个人信息
 export function setProfile(profileobj) {
-  return localStorage.setItem(profile, JSON.stringify(profileobj));
+  if (profileobj != undefined || profileobj != null) {
+    return localStorage.setItem(profile, JSON.stringify(profileobj));
+  }
+  return;
 }
 
 export function getProfile() {
-  return JSON.parse(localStorage.getItem(profile));
+  if (
+    localStorage.getItem(profile) != undefined ||
+    localStorage.getItem(profile) != null
+  ) {
+    return JSON.parse(localStorage.getItem(profile));
+  }
+  return;
 }
 //存音乐id数组
 export function setLocalStrorage(ids) {

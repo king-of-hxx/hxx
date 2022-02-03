@@ -34,7 +34,7 @@ export default {
     CardModel
   },
   mounted() {
-    let str = " 新鲜感总会过去，责任和教养不会。"
+    let str = " 互相迁就才最长远，双向奔赴才有意义。"
     let i = 0;
     let move_text = document.getElementById('move_text')
     if (i <= str.length) {
@@ -57,6 +57,9 @@ export default {
 <style lang="scss" scoped>
 * {
   border: 0;
+}
+/deep/.el-input__inner {
+  color: #141414;
 }
 .background {
   width: 100vw;

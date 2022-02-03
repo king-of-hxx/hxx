@@ -148,6 +148,7 @@ export default {
     }
   },
   created() {
+    console.log(this.currentUserInfo);
     hotSearchMusic().then(res => {
       this.hotSearch = res.data.data
     })
@@ -234,7 +235,7 @@ export default {
         let date = new Date().getTime()
         const checkStatus = await checkQrcodeStatus(date, this.unikey)
         console.log(checkStatus);
-        const { code, message } = checkStatus.data
+        const { code, message, cookie } = checkStatus.data
         if (this.dialogVisible == false) {
           clearInterval(time)
         }
@@ -245,10 +246,8 @@ export default {
           this.isLogin = true
           this.$message.success(message);
           clearInterval(time)
-          this.$store.dispatch('login/getQrcodeUserInfo')
-          setTimeout(() => {
-            this.$router.go(0)
-          }, 1000)
+          await this.$store.dispatch('login/getQrcodeUserInfo', cookie)
+          // await this.$router.go(0)
         }
       }, 3000)
     },
@@ -264,7 +263,7 @@ export default {
           this.currentUserInfo = null;
           //存储用户信息的localstorage设置为null
           window.localStorage.setItem("currentUserInfo", null);
-          window.localStorage.setItem('token', null)
+          window.localStorage.removeItem('cookie')
           window.localStorage.setItem('musicIds', null)
           this.userImg = require("@/assets/images/login_person.png");
           this.$message.success('退出登录成功!')
@@ -439,6 +438,9 @@ export default {
         background-color: rgb(242, 242, 242);
       }
     }
+    /deep/ .el-input__inner {
+      color: white;
+    }
     ::-webkit-scrollbar {
       //滚动条的宽度
       width: 6px;
@@ -568,9 +570,6 @@ export default {
 }
 .el-icon-arrow-down {
   font-size: 16px;
-}
-/deep/ .el-input__inner {
-  color: white;
 }
 /deep/ .el-dropdown {
   line-height: 55px;

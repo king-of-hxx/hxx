@@ -1,4 +1,5 @@
 import request from "@/utils/request";
+import { getCookie } from "@/utils/localStrorage";
 
 //获取用户的我喜欢列表
 export function getMyLoveMusic(uid) {
@@ -7,6 +8,7 @@ export function getMyLoveMusic(uid) {
     method: "get",
     params: {
       uid,
+      cookie: getCookie(),
     },
   });
 }

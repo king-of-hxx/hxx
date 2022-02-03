@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { Message } from "element-ui";
 import { openLoading, closeLoading } from "./loading";
 
 const whiteList = ["/login/qr/check", "/mv/url", "/simi/mv"];
@@ -13,8 +12,10 @@ instance.interceptors.request.use(
   (config) => {
     if (whiteList.indexOf(config.url) === -1) {
       openLoading();
-      // config.headers["X-Token"] = getToken();
     }
+    // if (getCookie() !== undefined) {
+    //   config.headers["cookie"] = encodeURIComponent(getCookie());
+    // }
     return config;
   },
   (err) => {

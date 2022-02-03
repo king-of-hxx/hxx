@@ -1,4 +1,5 @@
 import request from "@/utils/request";
+import { getCookie } from "@/utils/localStrorage";
 //手机号登录
 export function getPhoneLogin(phone, password) {
   return request({
@@ -56,10 +57,13 @@ export function getPhoneLoginRefresh() {
   });
 }
 //账号信息
-export function getAccountInfo() {
+export function getAccountInfo(cookie) {
   return request({
     url: "/user/account",
     method: "get",
+    params: {
+      cookie,
+    },
   });
 }
 //用户信息
@@ -84,6 +88,7 @@ export function uploadAvatar(formData, imgSize, date) {
     params: {
       imgSize,
       date,
+      cookie: getCookie(),
     },
   });
 }
