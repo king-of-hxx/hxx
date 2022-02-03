@@ -12,7 +12,6 @@
             <span>MV详情</span>
           </h5>
           <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions"></video-player>
-          <div>{{playerOptions['sources'][0]['src']}}</div>
           <div class="MV_info">
             <span class="info_first">
               <img :src="mvInfo.cover" alt="">

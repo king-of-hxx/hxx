@@ -9,7 +9,7 @@
 <template>
   <div class="video_box">
     <ul>
-      <li v-for="item in videos" :key="item.vid">
+      <li v-for="item in videos" :key="item.vid" @click="playSearchMv(item.vid)">
         <img :src="item.coverUrl" alt="">
         <div class="video_info">
           <span class="mv">MV</span>
@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { timeFormat } from '@/utils/util'
 export default {
   data() {
@@ -53,8 +53,19 @@ export default {
   },
   mounted() {
     console.log(this.videos);
+  },
+  methods: {
+    ...mapActions('playMvDetail', ['getMvInfo', 'getMvUrl', 'getRelateMv']),
+    async playSearchMv(id) {
+      console.log(id);
+      await this.getMvInfo(id),
+        await this.getMvUrl(id),
+        await this.getRelateMv(id),
+        await this.$router.push({
+          name: "MVPlayPage"
+        })
+    }
   }
-
 }
 </script>
 <style lang="scss" scoped>
