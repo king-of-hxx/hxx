@@ -7,7 +7,7 @@
         <h5>郝祥兴大大的Blog!</h5>
         <collapse />
         <div class="img">
-          <img src="../assets/images/boy.jpg" alt="">
+          <img src="../assets/images/weixin.jpg" alt="">
         </div>
         <span id="move_text"></span>
       </header>
@@ -64,7 +64,7 @@ export default {
 .background {
   width: 100vw;
   height: 100vh;
-  background: url("../assets/images/bgc.png") center no-repeat;
+  background: url("../assets/images/girl1.jpg") center no-repeat;
   background-size: 100% 100%;
   overflow: hidden;
   header {
